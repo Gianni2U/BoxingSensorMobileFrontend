@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/password"
         android:layout_marginTop="100dp"
-        android:hint="register" />
+        android:text="register" />
 
 
 </RelativeLayout>
