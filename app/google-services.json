@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "81481930254",
+    "project_id": "boxing-sensor-databas",
+    "storage_bucket": "boxing-sensor-databas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81481930254:android:30de13e79eb75139ff4e5f",
+        "android_client_info": {
+          "package_name": "com.gianni.boxingsensormobilefrontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81481930254-uueb5q83md3ecbc43s0m83jasg8a7nno.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gianni.boxingsensormobilefrontend",
+            "certificate_hash": "9c3d85b8141e38c8226366b744d7fa303178823b"
+          }
+        },
+        {
+          "client_id": "81481930254-mudp07ju8n6gl3pj9c4e18s058dgkp2l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX4xMMPRQiF5f0oFim-7fVgSj6vDYJ8mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81481930254-mudp07ju8n6gl3pj9c4e18s058dgkp2l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
