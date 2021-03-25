@@ -8,11 +8,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:textSize="25dp"
-        android:text="Welcome to the Boxing App"/>
+        android:text="Welcome to the Boxing App"
+        android:layout_gravity="center"/>
     <Button
         android:id="@+id/button_register"
         android:layout_width="match_parent"
