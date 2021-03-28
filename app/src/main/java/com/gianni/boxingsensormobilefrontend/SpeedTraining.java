@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.content.SharedPreferences;
@@ -38,7 +39,7 @@ public class SpeedTraining extends AppCompatActivity {
     private boolean isSensorActive;
     BluetoothSocket btSocket = null;
     static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,6 @@ public class SpeedTraining extends AppCompatActivity {
         mButtonReset = findViewById(R.id.button_reset);
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         System.out.println(btAdapter.getBondedDevices());
-
         BluetoothDevice hc05 = btAdapter.getRemoteDevice("98:D3:31:FD:95:4D");
         System.out.println(hc05.getName());
 
@@ -61,14 +61,16 @@ public class SpeedTraining extends AppCompatActivity {
 
         do {
             try {
-                OutputStream outputStream = null;
+                /*OutputStream outputStream = null;*/
                 btSocket = hc05.createRfcommSocketToServiceRecord(mUUID);
                 System.out.println(btSocket);
                 btSocket.connect();
                 System.out.println(btSocket.isConnected());
-                outputStream = btSocket.getOutputStream();
+                // toast.makeText(getApplicationContext(),"Bluetooth connected", Toast.LENGTH_SHORT);
+               // toast.show();
+               /* outputStream = btSocket.getOutputStream();
                 outputStream.write(7);
-                Log.d(TAG, "Aanroepen!");
+                Log.d(TAG, "Aanroepen!");*/
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -139,7 +141,7 @@ public class SpeedTraining extends AppCompatActivity {
     private void sendSensorStatus()
     {
         //Send boolean (isSensorActive) over bluetooth to Arduino
-        /*OutputStream outputStream = null;
+        OutputStream outputStream = null;
         try {
             outputStream = btSocket.getOutputStream();
             outputStream.write(7);
@@ -147,7 +149,7 @@ public class SpeedTraining extends AppCompatActivity {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
     }
     private void setSensorStatusTrue()
