@@ -2,6 +2,9 @@ package com.gianni.boxingsensormobilefrontend;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.content.SharedPreferences;
@@ -13,7 +16,11 @@ import android.widget.Toast;
 import android.view.inputmethod.InputMethodManager;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Locale;
+import java.util.UUID;
 
 public class SpeedTraining extends AppCompatActivity {
     private EditText mEditTextInput;
@@ -26,6 +33,9 @@ public class SpeedTraining extends AppCompatActivity {
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
     private long mEndTime;
+    private boolean isSensorActive;
+    static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,52 @@ public class SpeedTraining extends AppCompatActivity {
         mButtonSet = findViewById(R.id.button_set);
         mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset = findViewById(R.id.button_reset);
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        System.out.println(btAdapter.getBondedDevices());
+
+        BluetoothDevice hc05 = btAdapter.getRemoteDevice("98:D3:31:FD:95:4D");
+        System.out.println(hc05.getName());
+
+        BluetoothSocket btSocket = null;
+        int counter =0;
+        do {
+            try {
+                btSocket = hc05.createRfcommSocketToServiceRecord(mUUID);
+                System.out.println(btSocket);
+                btSocket.connect();
+                System.out.println(btSocket.isConnected());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            counter++;
+        }while(!btSocket.isConnected() && counter < 3);
+
+        try {
+            OutputStream outputStream =  btSocket.getOutputStream();
+            outputStream.write(48);
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = btSocket.getInputStream();
+            inputStream.skip(inputStream.available());
+            for(int i = 0; i<26;i++)
+            {
+                byte b = (byte) inputStream.read();
+                System.out.println((char)b);
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            btSocket.close();
+            System.out.println(btSocket.isConnected());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,21 +127,38 @@ public class SpeedTraining extends AppCompatActivity {
             }
         });
     }
+    private void sendSensorStatus()
+    {
+        //Send boolean (isSensorActive) over bluetooth to Arduino
+    }
+    private void setSensorStatusTrue()
+    {
+        isSensorActive = true;
+    }
+    private void setSensorStatusFalse()
+    {
+        isSensorActive = false;
+    }
     private void setTime(long milliseconds) {
         mStartTimeInMillis = milliseconds;
         resetTimer();
         closeKeyboard();
     }
     private void startTimer() {
+        setSensorStatusTrue();
+        sendSensorStatus();
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
                 updateCountDownText();
+
             }
             @Override
             public void onFinish() {
+                setSensorStatusFalse();
+                sendSensorStatus();
                 mTimerRunning = false;
                 updateWatchInterface();
             }
@@ -183,4 +256,6 @@ public class SpeedTraining extends AppCompatActivity {
         }
 
     }
+
+
 }
