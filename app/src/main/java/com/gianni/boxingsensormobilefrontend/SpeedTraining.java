@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class SpeedTraining extends AppCompatActivity {
+    private static final String TAG = "Bluetooth";
     private EditText mEditTextInput;
     private TextView mTextViewCountDown;
     private Button mButtonSet;
@@ -34,6 +36,7 @@ public class SpeedTraining extends AppCompatActivity {
     private long mTimeLeftInMillis;
     private long mEndTime;
     private boolean isSensorActive;
+    BluetoothSocket btSocket = null;
     static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
 
@@ -53,28 +56,34 @@ public class SpeedTraining extends AppCompatActivity {
         BluetoothDevice hc05 = btAdapter.getRemoteDevice("98:D3:31:FD:95:4D");
         System.out.println(hc05.getName());
 
-        BluetoothSocket btSocket = null;
+
         int counter =0;
+
         do {
             try {
+                OutputStream outputStream = null;
                 btSocket = hc05.createRfcommSocketToServiceRecord(mUUID);
                 System.out.println(btSocket);
                 btSocket.connect();
                 System.out.println(btSocket.isConnected());
+                outputStream = btSocket.getOutputStream();
+                outputStream.write(7);
+                Log.d(TAG, "Aanroepen!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
             counter++;
         }while(!btSocket.isConnected() && counter < 3);
 
-        try {
-            OutputStream outputStream =  btSocket.getOutputStream();
-            outputStream.write(48);
+        /*try {
+
         }catch (IOException e)
         {
             e.printStackTrace();
         }
-        InputStream inputStream = null;
+        */
+
+        /* InputStream inputStream = null;
         try
         {
             inputStream = btSocket.getInputStream();
@@ -92,7 +101,7 @@ public class SpeedTraining extends AppCompatActivity {
             System.out.println(btSocket.isConnected());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         mButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +139,16 @@ public class SpeedTraining extends AppCompatActivity {
     private void sendSensorStatus()
     {
         //Send boolean (isSensorActive) over bluetooth to Arduino
+        /*OutputStream outputStream = null;
+        try {
+            outputStream = btSocket.getOutputStream();
+            outputStream.write(7);
+            Log.d(TAG, "Aanroepen!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
     }
     private void setSensorStatusTrue()
     {
