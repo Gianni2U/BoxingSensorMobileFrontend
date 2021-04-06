@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class StartActivity extends AppCompatActivity {
 
     private Button register;
@@ -16,6 +19,8 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        storeNewUserData();
 
         register =findViewById(R.id.button_register);
         login = findViewById(R.id.button_login);
@@ -35,5 +40,13 @@ public class StartActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    private void storeNewUserData() {
+
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://boxing-sensor-databas-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference reference = rootNode.getReference("newpath");
+
+        reference.setValue("eentest");
+
     }
 }
