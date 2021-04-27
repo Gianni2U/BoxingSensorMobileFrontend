@@ -1,14 +1,15 @@
 package com.gianni.boxingsensormobilefrontend;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.icu.util.Output;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.content.SharedPreferences;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.inputmethod.InputMethodManager;
-import org.w3c.dom.Text;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,6 +29,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class SpeedTraining extends AppCompatActivity {
+    private int TrainingModeID;
     private static final String TAG = "Bluetooth";
     private EditText mEditTextInput;
     private TextView mTextViewCountDown;
@@ -37,15 +42,21 @@ public class SpeedTraining extends AppCompatActivity {
     private long mTimeLeftInMillis;
     private long mEndTime;
     private boolean isSensorActive;
+    private boolean isGameStopped = false;
     BluetoothSocket btSocket = null;
     static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     Toast toast;
-
+    private DatabaseReference mDatabase;
+    private void ProgramModeToDatabase()
+    {
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://boxing-sensor-databas-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference reference = rootNode.getReference("user_state");
+        reference.setValue("2");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speed_training);
-
         mEditTextInput = findViewById(R.id.edit_text_input);
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
         mButtonSet = findViewById(R.id.button_set);
@@ -55,29 +66,31 @@ public class SpeedTraining extends AppCompatActivity {
         System.out.println(btAdapter.getBondedDevices());
         BluetoothDevice hc05 = btAdapter.getRemoteDevice("98:D3:31:FD:95:4D");
         System.out.println(hc05.getName());
-
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        ProgramModeToDatabase();
         int counter =0;
 
-        do {
+        //This is where the bluetooth connection will be made
+        /*do {
+
             try {
-                /*OutputStream outputStream = null;*/
+                OutputStream outputStream = null;
                 btSocket = hc05.createRfcommSocketToServiceRecord(mUUID);
                 System.out.println(btSocket);
                 btSocket.connect();
                 System.out.println(btSocket.isConnected());
                 // toast.makeText(getApplicationContext(),"Bluetooth connected", Toast.LENGTH_SHORT);
                // toast.show();
-               /* outputStream = btSocket.getOutputStream();
+               outputStream = btSocket.getOutputStream();
                 outputStream.write(7);
-                Log.d(TAG, "Aanroepen!");*/
+                Log.d(TAG, "Aanroepen!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
             counter++;
         }while(!btSocket.isConnected() && counter < 3);
 
-        /*try {
+        try {
 
         }catch (IOException e)
         {
@@ -104,17 +117,18 @@ public class SpeedTraining extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+
         mButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String input = mEditTextInput.getText().toString();
                 if (input.length() == 0) {
-                    Toast.makeText(SpeedTraining.this, "Field can't be empty", Toast.LENGTH_SHORT).show();
+                    MakeToast("Field can't be empty");
                     return;
                 }
                 long millisInput = Long.parseLong(input) * 60000;
                 if (millisInput == 0) {
-                    Toast.makeText(SpeedTraining.this, "Please enter a positive number", Toast.LENGTH_SHORT).show();
+                    MakeToast("Please put a positive number");
                     return;
                 }
                 setTime(millisInput);
@@ -138,7 +152,7 @@ public class SpeedTraining extends AppCompatActivity {
             }
         });
     }
-    private void sendSensorStatus()
+    /*private void sendSensorStatus()
     {
         //Send boolean (isSensorActive) over bluetooth to Arduino
         OutputStream outputStream = null;
@@ -152,9 +166,14 @@ public class SpeedTraining extends AppCompatActivity {
         }
 
     }
+    */
     private void setSensorStatusTrue()
     {
         isSensorActive = true;
+    }
+    public void MakeToast(String msg)
+    {
+        Toast.makeText(SpeedTraining.this,msg,Toast.LENGTH_SHORT).show();
     }
     private void setSensorStatusFalse()
     {
@@ -167,19 +186,21 @@ public class SpeedTraining extends AppCompatActivity {
     }
     private void startTimer() {
         setSensorStatusTrue();
-        sendSensorStatus();
+        //sendSensorStatus();
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
                 updateCountDownText();
-
             }
             @Override
             public void onFinish() {
+                MakeToast("Finished");
                 setSensorStatusFalse();
-                sendSensorStatus();
+                //sendSensorStatus();
+                isGameStopped = true;
+                SendGameStatus(isGameStopped);
                 mTimerRunning = false;
                 updateWatchInterface();
             }
@@ -187,13 +208,22 @@ public class SpeedTraining extends AppCompatActivity {
         mTimerRunning = true;
         updateWatchInterface();
     }
+    public  void SendGameStatus(boolean isGameStopped)
+    {
+        if(isGameStopped == true)
+        {
+         MakeToast("Game is stopped");
+        }
+    }
     private void pauseTimer() {
         mCountDownTimer.cancel();
         mTimerRunning = false;
+        MakeToast("Pause");
         updateWatchInterface();
     }
     private void resetTimer() {
         mTimeLeftInMillis = mStartTimeInMillis;
+        MakeToast("Reset");
         updateCountDownText();
         updateWatchInterface();
     }
@@ -271,12 +301,11 @@ public class SpeedTraining extends AppCompatActivity {
                 mTimerRunning = false;
                 updateCountDownText();
                 updateWatchInterface();
+
             } else {
                 startTimer();
             }
         }
 
     }
-
-
 }
