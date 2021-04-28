@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.content.SharedPreferences;
 import android.renderscript.ScriptGroup;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +49,7 @@ public class SpeedTraining extends AppCompatActivity {
     static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     Toast toast;
     private DatabaseReference mDatabase;
+    private int seconds;
     private void ProgramModeToDatabase()
     {
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://boxing-sensor-databas-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -68,6 +71,7 @@ public class SpeedTraining extends AppCompatActivity {
         System.out.println(hc05.getName());
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ProgramModeToDatabase();
+
         int counter =0;
 
         //This is where the bluetooth connection will be made
@@ -127,12 +131,38 @@ public class SpeedTraining extends AppCompatActivity {
                     return;
                 }
                 long millisInput = Long.parseLong(input) * 60000;
+
                 if (millisInput == 0) {
                     MakeToast("Please put a positive number");
                     return;
                 }
                 setTime(millisInput);
                 mEditTextInput.setText("");
+            }
+        });
+        mEditTextInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                String input = mEditTextInput.getText().toString();
+                if (input.length() == 0) {
+                    MakeToast("Field can't be empty");
+                    return;
+                }
+                seconds = convertMinToSeconds(Integer.parseInt(input));
+                FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://boxing-sensor-databas-default-rtdb.europe-west1.firebasedatabase.app/");
+                DatabaseReference reference = rootNode.getReference("/Training_Mode_1/Seconds");
+                reference.setValue(seconds);
             }
         });
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +197,10 @@ public class SpeedTraining extends AppCompatActivity {
 
     }
     */
+    private int convertMinToSeconds(int min)
+    {
+      return min * 60;
+    }
     private void setSensorStatusTrue()
     {
         isSensorActive = true;
