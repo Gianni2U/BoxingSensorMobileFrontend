@@ -1,0 +1,25 @@
+com/gianni/boxingsensormobilefrontend/MainActivity.java
+ com.gianni.boxingsensormobilefrontend.MainActivity
+ com.gianni.boxingsensormobilefrontend.MainActivity$1
+com/gianni/boxingsensormobilefrontend/LoginActivity.java
+ com.gianni.boxingsensormobilefrontend.LoginActivity
+ com.gianni.boxingsensormobilefrontend.LoginActivity$1
+ com.gianni.boxingsensormobilefrontend.LoginActivity$2
+com/gianni/boxingsensormobilefrontend/StatisticsActivity.java
+ com.gianni.boxingsensormobilefrontend.StatisticsActivity
+com/gianni/boxingsensormobilefrontend/BuildConfig.java
+ com.gianni.boxingsensormobilefrontend.BuildConfig
+com/gianni/boxingsensormobilefrontend/UserInstances.java
+ com.gianni.boxingsensormobilefrontend.UserInstances
+com/gianni/boxingsensormobilefrontend/StartActivity.java
+ com.gianni.boxingsensormobilefrontend.StartActivity
+ com.gianni.boxingsensormobilefrontend.StartActivity$1
+ com.gianni.boxingsensormobilefrontend.StartActivity$2
+com/gianni/boxingsensormobilefrontend/AddInfoActivity.java
+ com.gianni.boxingsensormobilefrontend.AddInfoActivity
+ com.gianni.boxingsensormobilefrontend.AddInfoActivity$1
+com/gianni/boxingsensormobilefrontend/RegisterActivity.java
+ com.gianni.boxingsensormobilefrontend.RegisterActivity
+ com.gianni.boxingsensormobilefrontend.RegisterActivity$1
+ com.gianni.boxingsensormobilefrontend.RegisterActivity$2
+ com.gianni.boxingsensormobilefrontend.RegisterActivity$3
