@@ -1,1 +1,2 @@
-<b> Other coders please dont push to this feature branch! Cherry-pick to master if needed</b>
+# BoxingSensorMobileFrontend
+An android frontend for the BoxingSensor project
