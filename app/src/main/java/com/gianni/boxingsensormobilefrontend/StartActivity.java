@@ -20,7 +20,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        storeNewUserData();
+       // storeNewUserData();
 
         register =findViewById(R.id.button_register);
         login = findViewById(R.id.button_login);
