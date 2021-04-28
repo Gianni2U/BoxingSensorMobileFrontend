@@ -66,9 +66,9 @@ public class SpeedTraining extends AppCompatActivity {
         mButtonStartPause = findViewById(R.id.button_start_pause);
         mButtonReset = findViewById(R.id.button_reset);
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-        System.out.println(btAdapter.getBondedDevices());
-        BluetoothDevice hc05 = btAdapter.getRemoteDevice("98:D3:31:FD:95:4D");
-        System.out.println(hc05.getName());
+        //System.out.println(btAdapter.getBondedDevices());
+        //BluetoothDevice hc05 = btAdapter.getRemoteDevice("98:D3:31:FD:95:4D");
+        //System.out.println(hc05.getName());
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ProgramModeToDatabase();
 
