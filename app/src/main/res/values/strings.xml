@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BoxingsensorMobileFrontend</string>
     <string name="addInfoExplanation">To help us better understand and assist our customers, we ask you to please submit the following additional information.</string>
+    <string name="start">Start</string>
 </resources>
