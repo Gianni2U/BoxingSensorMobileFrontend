@@ -34,7 +34,6 @@ import java.util.Random;
 public class PowerTraining extends AppCompatActivity {
     private int TrainingModeID;
     DatabaseReference reff;
-    TextView TVtop1;
     Button GetDataBTN;
     DataSnapshot snapshot;
     String url;
@@ -44,7 +43,6 @@ public class PowerTraining extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_power_training);
-        TVtop1 = findViewById(R.id.Top1TV);
         ProgramModeToDatabase();
 
     }
