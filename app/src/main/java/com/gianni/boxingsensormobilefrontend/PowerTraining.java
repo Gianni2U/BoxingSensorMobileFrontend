@@ -46,15 +46,6 @@ public class PowerTraining extends AppCompatActivity {
         setContentView(R.layout.activity_power_training);
         TVtop1 = findViewById(R.id.Top1TV);
         ProgramModeToDatabase();
-        GetDataBTN = findViewById(R.id.GetDatabutton);
-        GetDataBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ShowData();
-                //Log.d("Bericht","Button geklikt");
-
-            }
-        });
 
     }
     private void ProgramModeToDatabase()
