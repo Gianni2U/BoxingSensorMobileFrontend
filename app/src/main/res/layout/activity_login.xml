@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="50dp"
+        android:text="Welcome back!"
+        android:textStyle="bold"
+        android:textSize="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="50dp"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,13 +37,17 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="65dp"
         android:layout_below="@+id/password"
         android:layout_marginTop="75dp"
         android:layout_gravity="center"
         android:width="100dp"
-        android:text="LOGIN" />
+        android:text="LOGIN"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/mybuttons"
+        android:textSize="30dp"/>
+
 
 
 </LinearLayout>

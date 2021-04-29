@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String value =  dataSnapshot.getValue(Long.class).toString();
                 userInstances = Integer.parseInt(value) ;
 
-                while (!runOnce) {
+                while (!runOnce) {      //congrats you found the worst code in this project! But it does work..
                     dbreference.child("UID").child("User_" + (userInstances+1)).child("email").setValue(txt_email);
                     dbreference.child("UID").child("UIDcount").setValue(userInstances+1);
                     runOnce = true;

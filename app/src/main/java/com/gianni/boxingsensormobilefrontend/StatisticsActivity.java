@@ -1,6 +1,7 @@
 package com.gianni.boxingsensormobilefrontend;
 
 import androidx.appcompat.app.AppCompatActivity;
+import static com.gianni.boxingsensormobilefrontend.RegisterActivity.userInstances;
 
 import android.os.Bundle;
 

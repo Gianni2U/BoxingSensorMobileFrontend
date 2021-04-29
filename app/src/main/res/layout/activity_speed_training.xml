@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SpeedTraining"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/background">
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,9 +34,13 @@
     <Button
         android:id="@+id/button_set"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/mybuttons"
+
+        android:textSize="30dp"
         android:text="Set" />
 
     <TextView
@@ -48,18 +53,25 @@
         android:textSize="60sp" />
     <Button
         android:id="@+id/button_start_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/text_view_countdown"
         android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/mybuttons"
+        android:textSize="30dp"
         android:text="@string/start" />
     <Button
         android:id="@+id/button_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:text="reset"
         android:visibility="invisible"
-        tools:visibility="visible" />
+        tools:visibility="visible"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/mybuttons"
+        android:textSize="30dp"/>
 
 </LinearLayout>

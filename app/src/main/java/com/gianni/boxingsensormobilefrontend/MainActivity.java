@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private Button PowerButton;
     private Button SpeedButton;
+    private Button StatsButton;
 
     //private FirebaseDatabase database = FirebaseDatabase.getInstance();
     //private DatabaseReference myRef = database.getReference("UserData");
@@ -32,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         PowerButton = findViewById(R.id.btnPower);
         SpeedButton = findViewById(R.id.btnSpeed);
+
+        StatsButton = findViewById(R.id.btnStatistics);
+        StatsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, StatisticsActivity.class));
+            }
+        });
+
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
