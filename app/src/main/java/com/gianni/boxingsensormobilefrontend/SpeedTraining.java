@@ -156,7 +156,6 @@ public class SpeedTraining extends AppCompatActivity {
 
                 String input = mEditTextInput.getText().toString();
                 if (input.length() == 0) {
-                    MakeToast("Field can't be empty");
                     return;
                 }
                 seconds = convertMinToSeconds(Integer.parseInt(input));

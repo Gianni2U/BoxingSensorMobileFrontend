@@ -22,29 +22,20 @@
         android:layout_gravity="center"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Top 3 hardest punches :"
-        android:layout_gravity="center"/>
-    <TextView
+        android:id="@+id/Top1TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_gravity="center"
-        android:text="1."/>
-    <TextView
+        android:text="Feedback."/>
+
+    <Button
+        android:id="@+id/GetDatabutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:layout_gravity="center"
-        android:text="2."/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:layout_gravity="center"
-        android:text="3."/>
+        android:text="Get feedback" />
 
 
 </LinearLayout>
