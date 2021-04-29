@@ -35,16 +35,10 @@ public class PowerTraining extends AppCompatActivity {
     private int TrainingModeID;
     DatabaseReference reff;
     TextView TVtop1;
-    TextView TVtop2;
-    TextView TVtop3;
     Button GetDataBTN;
     DataSnapshot snapshot;
     String url;
     private RequestQueue mQueue;
-    final int min = 100;
-    final int max = 200;
-    int random;
-    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +47,11 @@ public class PowerTraining extends AppCompatActivity {
         TVtop1 = findViewById(R.id.Top1TV);
         ProgramModeToDatabase();
         GetDataBTN = findViewById(R.id.GetDatabutton);
-        editText = findViewById(R.id.EditText);
         GetDataBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //ShowData();
                 //Log.d("Bericht","Button geklikt");
-                String powerpunch = editText.getText().toString();
-                int power = Integer.parseInt(powerpunch);
-                if(power > 150)
-                {
-                    TVtop1.setText("You did good");
-                }
-                if(power < 150)
-                {
-                    TVtop1.setText("You did bad");
-                }
-
 
             }
         });
