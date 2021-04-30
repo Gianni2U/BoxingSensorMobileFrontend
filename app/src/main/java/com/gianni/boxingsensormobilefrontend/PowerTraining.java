@@ -38,12 +38,14 @@ public class PowerTraining extends AppCompatActivity {
     DataSnapshot snapshot;
     String url;
     private RequestQueue mQueue;
+    TextView PunchForce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_power_training);
         ProgramModeToDatabase();
+        ShowData();
 
     }
     private void ProgramModeToDatabase()
@@ -83,15 +85,14 @@ public class PowerTraining extends AppCompatActivity {
         });
         mQueue.add(request);
         */
-        /*
-        reff = FirebaseDatabase.getInstance().getReference().child("Training_Mode_2").child("2021-04-27/Samuel/Punches");
+        reff = FirebaseDatabase.getInstance().getReference().child("Training_Mode_2").child("2021-04-29/Samuel");
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                TVtop1 = findViewById(R.id.Top1TV);
-                Log.d("Waarde","GElukt");
-                String name = dataSnapshot.child("-MZJwyoZEGdMbqb_M75K").getValue().toString();
-                TVtop1.setText(name);
+                PunchForce = findViewById(R.id.Punchforce);
+                Log.d("Waarde","Gelukt");
+                String value = dataSnapshot.child("Punches_in_a_timeperiod").getValue().toString();
+                PunchForce.setText(value);
                 Toast.makeText(getApplicationContext(),"Data uithalen",Toast.LENGTH_SHORT).show();
             }
 
@@ -100,6 +101,6 @@ public class PowerTraining extends AppCompatActivity {
 
             }
         });
-    }*/
+    }
 }
-}
+

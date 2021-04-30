@@ -1,5 +1,6 @@
 package com.gianni.boxingsensormobilefrontend;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -20,8 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 import java.io.IOException;
@@ -50,6 +54,9 @@ public class SpeedTraining extends AppCompatActivity {
     Toast toast;
     private DatabaseReference mDatabase;
     private int seconds;
+    DatabaseReference reff;
+    DataSnapshot snapshot;
+    TextView SpeedPunch;
     private void ProgramModeToDatabase()
     {
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://boxing-sensor-databas-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -71,7 +78,7 @@ public class SpeedTraining extends AppCompatActivity {
         //System.out.println(hc05.getName());
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ProgramModeToDatabase();
-
+        ShowData();
         int counter =0;
 
         //This is where the bluetooth connection will be made
@@ -340,5 +347,25 @@ public class SpeedTraining extends AppCompatActivity {
             }
         }
 
+    }
+    private void ShowData()
+    {
+
+        reff = FirebaseDatabase.getInstance().getReference().child("Training_Mode_1").child("2021-04-29/Samuel");
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                SpeedPunch = findViewById(R.id.SpeedPunches);
+                Log.d("Waarde","Gelukt");
+                String timespunched = dataSnapshot.child("Punches").getValue().toString();
+                SpeedPunch.setText(timespunched);
+                Toast.makeText(getApplicationContext(),"Data uithalen",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
